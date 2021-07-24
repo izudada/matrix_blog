@@ -7,6 +7,7 @@ from django.contrib.auth.models import (PermissionsMixin, AbstractBaseUser, User
 from django.utils import timezone
 
 from django.utils.translation import gettext_lazy as _
+from helpers.models import TrackingModel
 
 
 class BlogUserManager(UserManager):
