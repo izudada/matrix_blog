@@ -149,7 +149,6 @@ class Comment(TrackingModel, models.Model):
 
 
 class Likes(TrackingModel, models.Model):
-    author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
     post = models.ForeignKey(Article, related_name="likes", on_delete= models.CASCADE, null=True)
     count = models.IntegerField()
 
@@ -162,7 +161,6 @@ class Likes(TrackingModel, models.Model):
 
 
 class Dislikes(TrackingModel, models.Model):
-    author = models.ForeignKey(User, related_name="dislkes", on_delete= models.CASCADE, null=True)
     post = models.ForeignKey(Article, related_name="dislikes", on_delete= models.CASCADE, null=True)
     count = models.IntegerField()
 
