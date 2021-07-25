@@ -104,3 +104,54 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
 
     def __str__(self):
         return self.username
+
+
+class Article(TrackingModel, models.Model):
+    title = models.CharField(max_length=200, unique=True)
+    author = models.ForeignKey(User, related_name="post", on_delete= models.CASCADE, null=True)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('article_detail', args=[str(self.id)])
+
+    @property
+    def number_of_comments(self):
+        return Comment.objects.filter(post=self).count()
+
+    @property
+    def number_of_likes(self):
+        return Likes.objects.filter(post=self).count()
+
+    @property
+    def number_of_dislikes(self):
+        return Dislikes.objects.filter(post=self).count()
+
+
+class Comment(TrackingModel, models.Model):
+    author = models.ForeignKey(User, related_name="comments", on_delete= models.CASCADE, null=True)
+    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    body = models.TextField()
+
+    def __str__(self):
+        return str(self.author) + ', ' + self.post.title[:40]
+
+
+class Likes(TrackingModel, models.Model):
+    author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
+    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    count = models.IntegerField()
+
+    def __str__(self):
+        return self.count
+
+
+class Dislikes(TrackingModel, models.Model):
+    author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
+    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    count = models.IntegerField()
+
+    def __str__(self):
+        return self.count
