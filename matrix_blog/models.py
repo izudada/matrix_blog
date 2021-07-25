@@ -157,7 +157,7 @@ class Likes(TrackingModel, models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.count
+        return str(self.count)
 
 
 class Dislikes(TrackingModel, models.Model):
@@ -168,4 +168,4 @@ class Dislikes(TrackingModel, models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.count
+        return str(self.count)
