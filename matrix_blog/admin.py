@@ -15,7 +15,7 @@ class DislikeInline(admin.TabularInline):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'body',)
+    list_display = ('title',)
     inlines = [CommentInline, LikesInline, DislikeInline]
 
 
