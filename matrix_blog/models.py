@@ -110,6 +110,7 @@ class Article(TrackingModel, models.Model):
     title = models.CharField(max_length=200, unique=True)
     author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
     body = models.TextField()
+    slug = models.SlugField(null=True)
 
 
     class Meta:
@@ -120,7 +121,7 @@ class Article(TrackingModel, models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article_detail', args=[str(self.id)])
+        return reverse('article_detail', kwargs={'slug': self.slug})
 
     @property
     def number_of_comments(self):
