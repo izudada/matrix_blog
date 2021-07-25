@@ -108,8 +108,13 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
 
 class Article(TrackingModel, models.Model):
     title = models.CharField(max_length=200, unique=True)
-    author = models.ForeignKey(User, related_name="post", on_delete= models.CASCADE, null=True)
+    author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
     body = models.TextField()
+
+
+    class Meta:
+        ordering = ('-created_at',)
+
 
     def __str__(self):
         return self.title
@@ -135,23 +140,34 @@ class Comment(TrackingModel, models.Model):
     post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
     body = models.TextField()
 
+
+    class Meta:
+        ordering = ('-created_at',)
+
     def __str__(self):
         return str(self.author) + ', ' + self.post.title[:40]
 
 
 class Likes(TrackingModel, models.Model):
     author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
-    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    post = models.ForeignKey(Article, related_name="likes", on_delete= models.CASCADE, null=True)
     count = models.IntegerField()
+
+
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.count
 
 
 class Dislikes(TrackingModel, models.Model):
-    author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
-    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    author = models.ForeignKey(User, related_name="dislkes", on_delete= models.CASCADE, null=True)
+    post = models.ForeignKey(Article, related_name="dislikes", on_delete= models.CASCADE, null=True)
     count = models.IntegerField()
+
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.count
