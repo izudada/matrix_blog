@@ -1,7 +1,7 @@
 from django.urls import  reverse_lazy, reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect, request
 
@@ -17,6 +17,19 @@ class ArticleListView(ListView):
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'
+
+
+class UpdateArticle(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Article
+    # template_name = 'edit.html'
+    fields = ['title', 'body']
+
+    def test_func(self):
+        article = self.get_object()
+        if self.request.user.is_staff:
+            return True
+        else:
+            return False
 
 
 class ArticleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
