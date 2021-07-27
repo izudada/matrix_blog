@@ -144,10 +144,34 @@
 
         {% if comments %}
             <br>
-            <div>
-                <strong class="text-secondary">
-                    {{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}
-                </strong>
+            <!-- Likes, Dislikes, Number Of Comment -->
+            <div class="row">
+                <div class="col-sm-2">
+                    <strong class="text-secondary">
+                        {{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}
+                    </strong>
+                </div>
+                <div class="col-sm-1">
+                    <div class="add__sub"> 
+                        <h5>{{ object.number_of_likes }}</h5>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button>
+                                <a href="" class="">
+                                    <span class="material-icons icon "> thumb_up </span>
+                                </a>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="add__sub"> 
+                        <h5>{{ object.number_of_dislikes }}</h5>
+                        <a href="" class="">
+                             <span class="material-icons icon "> thumb_down </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <hr>
             <ul>

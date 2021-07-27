@@ -5,6 +5,8 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect, request
 
+from django.template.defaultfilters import slugify
+
 
 from .models import Article, Comment, Dislikes, Likes, User
 from .forms import RegisterForm, NewCommentForm
@@ -65,9 +67,9 @@ class ArticleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'create_article.html'
 
     def form_valid(self, form):
-        slug = form.instance.title.split(' ')
-        slug = ('-').join(slug)
-        form.instance.slug = slug
+        # slug = form.instance.title
+        # slug = ('-').join(slug)
+        form.instance.slug = slugify(form.instance.title)
         form.instance.author = self.request.user
         return super(ArticleCreateView, self).form_valid(form)
     
