@@ -105,6 +105,9 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
     def __str__(self):
         return self.username
 
+    def get_absolute_url(self):
+        return reverse('index')
+
 
 class Article(TrackingModel, models.Model):
     title = models.CharField(max_length=200, unique=True)
