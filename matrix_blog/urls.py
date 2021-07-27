@@ -1,8 +1,9 @@
 from django.urls import include, path
 
-from .views import ArticleListView, ArticleDetailView, UserCreateView, ArticleCreateView, UpdateArticle
+from .views import ArticleListView, ArticleDetailView, UserCreateView, ArticleCreateView, UpdateArticle, DeleteArticleView
 
 urlpatterns = [
+    path('<slug:slug>/delete/', DeleteArticleView.as_view(), name="delete_article"),
     path('<slug:slug>/edit/', UpdateArticle.as_view(), name="update_article"),
     path('create_article/', ArticleCreateView.as_view(), name="create_article"),
     path('<slug:slug>', ArticleDetailView.as_view(), name='article_detail'),
