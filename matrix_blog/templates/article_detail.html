@@ -4,14 +4,16 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditModal"> Edit</button>
+    {% if user.is_authenticated and user.is_staff %}
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditModal"> Edit</button>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal"> Delete</button>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal"> Delete</button>
-        </div>
-    </div>
+    {% endif %}
     <div>
         <h2>{{ object.title }}</h2>
         <p>{{ object.body }}</p>
@@ -47,7 +49,7 @@
                         </div>
             
             
-                        <input type="submit" class="home__button" value="Create">
+                        <input type="submit" class="home__button" value="Edit">
                     </form>
                 </div>
 
@@ -94,4 +96,83 @@
             </div>
         </div>
     </div>
+
+    <hr>
+
+    <div id="comments_section">
+
+        {% if user.is_authenticated %}
+            <div class="">
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CommentModal"> Comment</button>
+            </div>
+            <!-- Comment Modal -->
+            <div class="modal" id="CommentModal" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <!-- <h1 class="modal-title">Add An Article</h1> -->
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ comment_form|crispy }}
+                                    <button class="home__button" type="submit">Add comment 
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                        </div>
+
+                    </div>
+                </div>
+            </div>        
+
+        {% else %}
+            <a class="home__button" href="{% url 'login' %}">Log in to add a comment!</a><br>
+        {% endif %}
+
+        {% if comments %}
+            <br>
+            <div>
+                <strong class="text-secondary">
+                    {{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}
+                </strong>
+            </div>
+            <hr>
+            <ul>
+                {% for comment in comments %}
+                    <li>           
+                        <div>
+                        <span>
+                            <strong class="text-info">{{ comment.author }} </strong>
+                            <small class="text-muted">{{ comment.created_at }}</small>
+                        </span>
+                        <p>
+                            {{ comment.body|safe }}
+                        </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+        <br>
+            <div>
+                <strong class="text-secondary">No comments yet...</strong>
+            </div>
+
+        {% endif %}
+    </div>
+    <br><br>
+    
 {% endblock %}
