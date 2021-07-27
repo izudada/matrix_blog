@@ -128,20 +128,20 @@ class Article(TrackingModel, models.Model):
 
     @property
     def number_of_comments(self):
-        return Comment.objects.filter(post=self).count()
+        return Comment.objects.filter(article=self).count()
 
     @property
     def number_of_likes(self):
-        return Likes.objects.filter(post=self).count()
+        return Likes.objects.filter(article=self).count()
 
     @property
     def number_of_dislikes(self):
-        return Dislikes.objects.filter(post=self).count()
+        return Dislikes.objects.filter(article=self).count()
 
 
 class Comment(TrackingModel, models.Model):
     author = models.ForeignKey(User, related_name="comments", on_delete= models.CASCADE, null=True)
-    post = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
+    article = models.ForeignKey(Article, related_name="comments", on_delete= models.CASCADE, null=True)
     body = models.TextField()
 
 
@@ -149,7 +149,7 @@ class Comment(TrackingModel, models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return str(self.author) + ', ' + self.post.title[:40]
+        return str(self.author) + ', ' + self.article.title[:40]
 
 
 class Likes(TrackingModel, models.Model):
