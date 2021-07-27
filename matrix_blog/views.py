@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, request
 
 
 from .models import Article, Comment, Dislikes, Likes, User
-from .forms import RegisterForm, AddNewForm, NewCommentForm
+from .forms import RegisterForm, NewCommentForm
 
 class ArticleListView(ListView):
     model = Article
@@ -18,7 +18,21 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        article_comments = Comment.objects.filter(article=self.get_object()).order_by('-created_at')
+        if article_comments:
+            data['comments'] = article_comments
+        if self.request.user.is_authenticated:
+            data['comment_form'] = NewCommentForm(instance=self.request.user)
+
+        return data
     
+    def post(self, request, *args, **kwargs):
+        new_comment = Comment(body=request.POST.get('body'), author=self.request.user, article=self.get_object())
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
 
 
 class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
