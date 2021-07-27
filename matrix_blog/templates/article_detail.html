@@ -4,8 +4,54 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"> Edit</button>
+    </div>
     <div>
         <h2>{{ object.title }}</h2>
         <p>{{ object.body }}</p>
+    </div>
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title">Edit Article </h1>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="{% url 'update_article' slug=object.slug %}" class="form-group" method="post">
+                        {% csrf_token %}
+                        <div id="div_id_title" class="form-group"> 
+                            <label for="id_title" class=" requiredField">Title
+                                <span class="asteriskField">*</span> 
+                            </label> 
+                            <div class=""> 
+                                <input type="text" name="title" maxlength="200" class="textinput textInput form-control" required="" value="{{ object.title }}" id="id_title"> 
+                            </div> 
+                        </div> 
+                        <div id="div_id_body" class="form-group"> 
+                            <label for="id_body" class=" requiredField">Body<span class="asteriskField">*</span> </label> 
+                            <div class=""> 
+                                <textarea name="body" cols="40" rows="10" class="textarea form-control" required=""  id="id_body">{{ object.body }}</textarea> 
+                            </div> 
+                        </div>
+            
+            
+                        <input type="submit" class="home__button" value="Create">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
     </div>
 {% endblock %}
