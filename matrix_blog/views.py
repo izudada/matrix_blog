@@ -67,8 +67,6 @@ class ArticleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'create_article.html'
 
     def form_valid(self, form):
-        # slug = form.instance.title
-        # slug = ('-').join(slug)
         form.instance.slug = slugify(form.instance.title)
         form.instance.author = self.request.user
         return super(ArticleCreateView, self).form_valid(form)
