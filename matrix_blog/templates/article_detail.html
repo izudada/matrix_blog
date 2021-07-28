@@ -154,9 +154,9 @@
                 <div class="col-sm-1">
                     <div class="add__sub"> 
                         <h5>0</h5>
-                        <form action="" method="post">
+                        <form action="{% url 'like_post' object.slug %}" method="post">
                             {% csrf_token %}
-                            <button>
+                            <button type="submit" name="like" value="{{ object.id }}">
                                 <a href="" class="">
                                     <span class="material-icons icon "> thumb_up </span>
                                 </a>
