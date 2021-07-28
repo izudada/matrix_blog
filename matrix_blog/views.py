@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, request
 from django.template.defaultfilters import slugify
 
 
-from .models import Article, Comment, Dislikes, Likes, User
+from .models import Article, Comment, User
 from .forms import RegisterForm, NewCommentForm
 
 class ArticleListView(ListView):
