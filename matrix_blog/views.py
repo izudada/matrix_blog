@@ -1,5 +1,5 @@
 from django.urls import  reverse_lazy, reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -10,6 +10,14 @@ from django.template.defaultfilters import slugify
 
 from .models import Article, Comment, User
 from .forms import RegisterForm, NewCommentForm
+
+
+def like_view(request, slug):
+    article = get_object_or_404(Article, id=request.POST.get('like'))
+    if request.user.is_authenticated:
+        article.likes.add(request.user)
+    return HttpResponseRedirect(reverse('article_detail', args=[str(article.slug)]))
+
 
 class ArticleListView(ListView):
     model = Article
