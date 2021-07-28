@@ -115,6 +115,7 @@ class Article(TrackingModel, models.Model):
     body = models.TextField()
     slug = models.SlugField(null=True)
     likes = models.ManyToManyField(User, related_name="likes")
+    dislikes = models.ManyToManyField(User, related_name="dislikes")
 
 
     class Meta:
@@ -130,6 +131,22 @@ class Article(TrackingModel, models.Model):
     @property
     def number_of_comments(self):
         return Comment.objects.filter(article=self).count()
+
+    @property
+    def number_of_likes(self):
+        return self.likes.count()
+
+    @property
+    def number_of_dislikes(self):
+        return self.dislikes.count()
+
+    @property
+    def all_liked(self):
+        return self.likes.all()
+
+    @property
+    def all_disliked(self):
+        return self.dislikes.all()
 
 
 class Comment(TrackingModel, models.Model):
