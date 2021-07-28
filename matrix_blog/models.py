@@ -114,6 +114,7 @@ class Article(TrackingModel, models.Model):
     author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
     body = models.TextField()
     slug = models.SlugField(null=True)
+    like = models.ManyToManyField(User, related_name="likes")
 
 
     class Meta:
@@ -130,14 +131,6 @@ class Article(TrackingModel, models.Model):
     def number_of_comments(self):
         return Comment.objects.filter(article=self).count()
 
-    @property
-    def number_of_likes(self):
-        return Likes.objects.filter(article=self).count()
-
-    @property
-    def number_of_dislikes(self):
-        return Dislikes.objects.filter(article=self).count()
-
 
 class Comment(TrackingModel, models.Model):
     author = models.ForeignKey(User, related_name="comments", on_delete= models.CASCADE, null=True)
@@ -151,27 +144,3 @@ class Comment(TrackingModel, models.Model):
     def __str__(self):
         return str(self.author) + ', ' + self.article.title[:40]
 
-
-class Likes(TrackingModel, models.Model):    
-    author = models.ForeignKey(User, related_name="likes", on_delete= models.CASCADE, null=True)
-    article = models.ForeignKey(Article, related_name="likes", on_delete= models.CASCADE, null=True)
-    count = models.IntegerField()
-
-
-    class Meta:
-        ordering = ('-created_at',)
-
-    def __str__(self):
-        return str(self.count)
-
-
-class Dislikes(TrackingModel, models.Model):
-    author = models.ForeignKey(User, related_name="dislikes", on_delete= models.CASCADE, null=True)
-    article = models.ForeignKey(Article, related_name="dislikes", on_delete= models.CASCADE, null=True)
-    count = models.IntegerField()
-
-    class Meta:
-        ordering = ('-created_at',)
-
-    def __str__(self):
-        return str(self.count)
