@@ -114,7 +114,7 @@ class Article(TrackingModel, models.Model):
     author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
     body = models.TextField()
     slug = models.SlugField(null=True)
-    like = models.ManyToManyField(User, related_name="likes")
+    likes = models.ManyToManyField(User, related_name="likes")
 
 
     class Meta:
