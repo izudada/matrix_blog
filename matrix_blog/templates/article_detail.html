@@ -107,86 +107,94 @@
 
             <div class="col-sm-6">
                 {% if user.is_authenticated %}
-                    <div class="">
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CommentModal"> Comment</button>
-                    </div>
-                    <!-- Comment Modal -->
-                    <div class="modal" id="CommentModal" >
-                        <div class="modal-dialog">
-                            <div class="modal-content">
+                    <div class="row">
 
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <!-- <h1 class="modal-title">Add An Article</h1> -->
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            {{ comment_form|crispy }}
-                                            <button class="home__button" type="submit">Add comment 
-                                                <i class="fas fa-comments"></i>
-                                            </button>
+                        <div class="col-sm-6">
+                            <!-- Modal Button -->
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CommentModal"> Comment</button>
+    
+                                <!-- Comment Modal -->
+                            <div class="modal" id="CommentModal" >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+    
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <!-- <h1 class="modal-title">Add An Article</h1> -->
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                    </form>
-
+    
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    {{ comment_form|crispy }}
+                                                    <button class="home__button" type="submit">Add comment 
+                                                        <i class="fas fa-comments"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+    
+                                        </div>
+    
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        </div>
+    
+                                    </div>
                                 </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
+                            </div>   
+                        </div> 
+    
+                        <div class="col-sm-6">
+                    
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="add__sub"> 
+                                        <h5> {{ object.number_of_likes }} </h5>
+                                        <form action="{% url 'preference' object.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="liked" type="submit" name="preference" value="like">
+                                                <a href="" class="">
+                                                    {% if user.is_authenticated and user in object.all_liked %}
+                                                        <span class="material-icons icon"> thumb_up </span>
+                                                    {% else %}
+                                                        <span class="material-icons icon  user-liked"> thumb_up </span>
+                                                    {% endif %}
+                                                </a>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-
+                                <div class="col-sm-6">
+                                    <div class="add__sub"> 
+                                        <h5> {{ object.number_of_dislikes }} </h5>
+                                        <form action="{% url 'preference' object.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="liked" type="submit" name="preference" value="dislike">
+                                                <a href="" class="">
+                                                    {% if user.is_authenticated and user in object.all_disliked %}
+                                                        <span class="material-icons icon"> thumb_up </span>
+                                                    {% else %}
+                                                        <span class="material-icons icon  user-liked"> thumb_down </span>
+                                                    {% endif %}
+                                                </a>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
+            
                         </div>
-                    </div>        
+
+                    </div>
 
                 {% else %}
                     <a class="home__button" href="{% url 'login' %}">Log in to add a comment!</a><br>
                 {% endif %}
             </div>
-            <div class="col-sm-6">
-                
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="add__sub"> 
-                            <h5> {{ object.number_of_likes }} </h5>
-                            <form action="{% url 'preference' object.id %}" method="post">
-                                {% csrf_token %}
-                                <button class="liked" type="submit" name="preference" value="like">
-                                    <a href="" class="">
-                                        {% if user.is_authenticated and user in object.all_liked %}
-                                            <span class="material-icons icon"> thumb_up </span>
-                                        {% else %}
-                                            <span class="material-icons icon  user-liked"> thumb_up </span>
-                                        {% endif %}
-                                    </a>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="add__sub"> 
-                            <h5> {{ object.number_of_dislikes }} </h5>
-                            <form action="{% url 'preference' object.id %}" method="post">
-                                {% csrf_token %}
-                                <button class="liked" type="submit" name="preference" value="dislike">
-                                    <a href="" class="">
-                                        {% if user.is_authenticated and user in object.all_disliked %}
-                                            <span class="material-icons icon"> thumb_up </span>
-                                        {% else %}
-                                            <span class="material-icons icon  user-liked"> thumb_down </span>
-                                        {% endif %}
-                                    </a>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
         </div>
 
 
