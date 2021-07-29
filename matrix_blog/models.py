@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from django.utils.translation import gettext_lazy as _
 from helpers.models import TrackingModel
+from ckeditor.fields import RichTextField
 
 
 class BlogUserManager(UserManager):
@@ -112,7 +113,7 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
 class Article(TrackingModel, models.Model):
     title = models.CharField(max_length=200, unique=True)
     author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
-    body = models.TextField()
+    body = RichTextField(blank=True, null=True)
     slug = models.SlugField(null=True)
     likes = models.ManyToManyField(User, related_name="likes")
     dislikes = models.ManyToManyField(User, related_name="dislikes")
