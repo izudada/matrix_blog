@@ -75,6 +75,7 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class UpdateArticle(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Article
     fields = ['title', 'body']
+    template_name = 'edit_article.html'
 
     def test_func(self):
         if self.request.user.is_staff:
