@@ -113,10 +113,11 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
 class Article(TrackingModel, models.Model):
     title = models.CharField(max_length=200, unique=True)
     author = models.ForeignKey(User, related_name="articles", on_delete= models.CASCADE, null=True)
+    header_image = models.ImageField(default="images/dummy.png", upload_to="images")
     body = RichTextField(blank=True, null=True)
     slug = models.SlugField(null=True)
-    likes = models.ManyToManyField(User, related_name="likes")
-    dislikes = models.ManyToManyField(User, related_name="dislikes")
+    likes = models.ManyToManyField(User, related_name="likes", blank=True)
+    dislikes = models.ManyToManyField(User, related_name="dislikes", blank=True)
 
 
     class Meta:

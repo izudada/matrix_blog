@@ -74,7 +74,7 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class UpdateArticle(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Article
-    fields = ['title', 'body']
+    fields = ['title', 'header_image', 'body']
     template_name = 'edit_article.html'
 
     def test_func(self):
@@ -86,7 +86,7 @@ class UpdateArticle(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ArticleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Article
-    fields = ['title', 'body']
+    fields = ['title', 'header_image', 'body']
     success_url = reverse_lazy('index')
     template_name = 'create_article.html'
 
