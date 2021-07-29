@@ -6,3 +6,11 @@
 .user-liked{
     color: rgb(79, 74, 74);
 }
+
+.container{
+    margin-top: 50px;
+}
+
+form{
+    text-align: justify;
+}
