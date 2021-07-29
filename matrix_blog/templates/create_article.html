@@ -6,9 +6,10 @@
     <div class="container">
         <form action="" class="form-group" method="post">
             {% csrf_token %}
-            {{ form|crispy}}
+            {{ form.media }}
+            {{ form|crispy }}
 
-            <input type="submit" class="home__button" value="Create">
+            <input type="submit" class="btn btn-success" value="Create">
         </form>
     </div>
 
