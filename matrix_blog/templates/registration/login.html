@@ -7,13 +7,13 @@
 
       
     <div class="row">
-        <h3 class="intro"> Login </h3>
         <div class="container">
+            <h3 class="intro"> Login </h3>
             <form action="" class="form-group login" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <p> <small>Don't Have an account? <a href="{% url 'register' %}">Sign Up</a></small> </p>
-                <input class="home__button" type="submit" class="btn btn-success" value="Login">
+                <input type="submit" class="btn btn-success" value="Login">
             </form>
         </div>
     </div>

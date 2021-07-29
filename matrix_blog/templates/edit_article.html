@@ -5,7 +5,7 @@
 {% block body %}
     <h3 class="intro"> Update Article </h3>
     <div class="container">
-        <form action="" class="form-group" method="post">
+        <form action="" class="form-group" enctype="multipart/form-data" method="post">
             {% csrf_token %}
             {{ form.media }}
             {{ form|crispy }}
