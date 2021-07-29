@@ -13,56 +13,13 @@
                      {{ article.author }}  -  {{ article.created_at }}  
                      {% if user.is_authenticated and user.is_staff %}
                         -
-                        <a type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#EditModal"> Edit</a>
+                        <a type="button" href="{% url 'update_article' slug=article.slug %}" class="btn btn-success btn-sm"> Edit</a>
                         <a type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#DeleteModal"> Delete</a> 
                     {% endif %}
                 </small>
             </p>
         </div>
-        <p>{{ article.body }}</p>
-    </div>
-    <!-- Edit Modal -->
-    <div class="modal" id="EditModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h1 class="modal-title">Edit Article </h1>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{% url 'update_article' slug=object.slug %}" class="form-group" method="post">
-                        {% csrf_token %}
-                        <div id="div_id_title" class="form-group"> 
-                            <label for="id_title" class=" requiredField">Title
-                                <span class="asteriskField">*</span> 
-                            </label> 
-                            <div class=""> 
-                                <input type="text" name="title" maxlength="200" class="textinput textInput form-control" required="" value="{{ object.title }}" id="id_title"> 
-                            </div> 
-                        </div> 
-                        <div id="div_id_body" class="form-group"> 
-                            <label for="id_body" class=" requiredField">Body<span class="asteriskField">*</span> </label> 
-                            <div class=""> 
-                                <textarea name="body" cols="40" rows="10" class="textarea form-control" required=""  id="id_body">{{ object.body }}</textarea> 
-                            </div> 
-                        </div>
-            
-            
-                        <input type="submit" class="home__button" value="Edit">
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-
-                </div>
-
-            </div>
-        </div>
+        <p>{{ article.body|safe }}</p>
     </div>
 
     <!-- Delete Modal -->
