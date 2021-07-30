@@ -15,12 +15,30 @@ form{
     text-align: justify;
 }
 
+.body{
+    padding: 10px;
+}
+
 .article-body{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.header-image{
-   width:  50% ;
+a .loop{
+    width: 2%;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+a .loop img{
+    width: 30%;
+}
+
+@media screen and (min-width: 452px) {
+
+    a .loop{
+        width: 50%;
+        /* padding: 20px; */
+    }
 }

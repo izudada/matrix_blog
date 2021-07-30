@@ -4,10 +4,19 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <h1>Articles</h1>
-    {% for article in object_list %}
-    <ul>
-        <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
-    </ul>
-    {% endfor %}
+    <div class="body">
+        <h1>All Articles</h1>
+        {% for article in object_list %}
+            <a href="{{ article.get_absolute_url }}">    
+                <div class="loop">        
+                    <img class="img-fluid" src="{{ article.header_image.url }}" alt="{{ article.title }} article header image">
+                    <p><small>{{ article.created_at }}</small></p>
+                    <h2>{{ article.title }}</h2>
+                </div>
+            </a>
+
+
+        {% endfor %}
+        
+    </div>
 {% endblock %}
