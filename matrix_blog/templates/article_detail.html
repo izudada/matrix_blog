@@ -110,63 +110,68 @@
     
                         <div class="col-sm-6">
                     
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="add__sub"> 
-                                        <h5> {{ object.number_of_likes }} </h5>
-                                        <form action="{% url 'preference' object.id %}" method="post">
-                                            {% csrf_token %}
-                                            <button class="liked" type="submit" name="preference" value="like">
-                                                <a href="" class="">
-                                                    {% if user.is_authenticated and user in object.all_liked %}
-                                                        <span class="material-icons icon"> thumb_up </span>
-                                                    {% else %}
-                                                        <span class="material-icons icon  user-liked"> thumb_up </span>
-                                                    {% endif %}
-                                                </a>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="add__sub"> 
-                                        <h5> {{ object.number_of_dislikes }} </h5>
-                                        <form action="{% url 'preference' object.id %}" method="post">
-                                            {% csrf_token %}
-                                            <button class="liked" type="submit" name="preference" value="dislike">
-                                                <a href="" class="">
-                                                    {% if user.is_authenticated and user in object.all_disliked %}
-                                                        <span class="material-icons icon"> thumb_up </span>
-                                                    {% else %}
-                                                        <span class="material-icons icon  user-liked"> thumb_down </span>
-                                                    {% endif %}
-                                                </a>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
             
                         </div>
 
                     </div>
 
                 {% else %}
-                    <a class="home__button" href="{% url 'login' %}">Log in to add a comment!</a><br>
+                    <a class="home__button" href="{% url 'login' %}">Log in to like or add a comment!</a><br>
                 {% endif %}
             </div>
 
         </div>
-
+        <br><br>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="add__sub"> 
+                    <h5> {{ object.number_of_likes }} </h5>
+                    <form action="{% url 'preference' object.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="liked" type="submit" name="preference" value="like">
+                            <a href="" class="">
+                                {% if user.is_authenticated and user in object.all_liked %}
+                                    <span class="material-icons icon"> thumb_up </span>
+                                {% else %}
+                                    <span class="material-icons icon  user-liked"> thumb_up </span>
+                                {% endif %}
+                            </a>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-2 add__sub"> 
+                <h5> {{ object.number_of_dislikes }} </h5>
+                <form action="{% url 'preference' object.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="liked" type="submit" name="preference" value="dislike">
+                        <a href="" class="">
+                            {% if user in object.all_disliked %}
+                                <span class="material-icons icon"> thumb_up </span>
+                            {% else %}
+                                <span class="material-icons icon  user-liked"> thumb_down </span>
+                            {% endif %}
+                        </a>
+                    </button>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                
+            </div>
+        </div>
 
         {% if comments %}
             <br>
             <!-- Likes, Dislikes, Number Of Comment -->
            
-            <div class="">
-                <strong class="text-secondary">
-                    {{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}
-                </strong>
+            <div class="row">
+                <div class="col-sm-3">
+                    <strong class="text-secondary">
+                        {{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}
+                    </strong>
+                </div>
+
             </div>
   
             <hr>

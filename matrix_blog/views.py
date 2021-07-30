@@ -14,24 +14,25 @@ from .forms import RegisterForm, NewCommentForm
 
 def preference(request, pk):
     if request.method == 'POST' and request.user.is_authenticated:
-            value = request.POST.get('preference')
-            article = get_object_or_404(Article, id=pk)     
-            if value == 'like':  
-                if request.user in article.all_liked:
-                    article.likes.remove(request.user)
-                else:
-                    article.likes.add(request.user)
-                    if request.user in article.all_disliked:
-                        article.dislikes.remove(request.user)
+        value = request.POST.get('preference')
+        article = get_object_or_404(Article, id=pk)     
+        if value == 'like':  
+            if request.user in article.all_liked:
+                article.likes.remove(request.user)
             else:
+                article.likes.add(request.user)
                 if request.user in article.all_disliked:
                     article.dislikes.remove(request.user)
-                else:
-                    article.dislikes.add(request.user)
-                    if request.user in article.all_liked:
-                        article.likes.remove(request.user)
+        else:
+            if request.user in article.all_disliked:
+                article.dislikes.remove(request.user)
+            else:
+                article.dislikes.add(request.user)
+                if request.user in article.all_liked:
+                    article.likes.remove(request.user)
 
-    return HttpResponseRedirect(reverse('article_detail', args=[str(article.slug)]))
+        return HttpResponseRedirect(reverse('article_detail', args=[str(article.slug)]))
+    return redirect('login')
 
 
 class ArticleListView(ListView):
