@@ -5,7 +5,7 @@
 
 {% block body %}
 
-    <div>
+    <div class="article-body">
         <h2>{{ article.title }}</h2>
         <div>
             <p>
@@ -20,7 +20,7 @@
             </p>
         </div>
         <div>
-            <img class="header-image" src="{{ article.header_image.url }}" alt="">
+            <img class="header-image" src="{{ article.header_image.url }}" alt="{{ article.title }} article header image">
         </div>
         <p>{{ article.body|safe }}</p>
 
