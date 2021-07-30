@@ -38,8 +38,11 @@ a .loop img{
 }
 
 footer{
+    bottom: 0;
     margin-top: 20px;
-    padding: 30px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding: 30px 30px 0 30px;
     background-color: #000;
     border-radius: 0 0 50px 50px ;
 }
