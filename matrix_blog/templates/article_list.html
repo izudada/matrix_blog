@@ -4,19 +4,25 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <div class="body">
-        <h1>All Articles</h1>
-        {% for article in object_list %}
-            <a href="{{ article.get_absolute_url }}">    
-                <div class="loop">        
-                    <img class="img-fluid" src="{{ article.header_image.url }}" alt="{{ article.title }} article header image">
-                    <p><small>{{ article.created_at }}</small></p>
-                    <h2>{{ article.title }}</h2>
-                </div>
-            </a>
-
-
-        {% endfor %}
-        
+    <div class=" rowbody">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1 class="text-center">All Articles</h1>
+                {% for article in object_list %}
+                    <a href="{{ article.get_absolute_url }}">   
+                        
+                                <div class="loop">        
+                                    <img  src="{{ article.header_image.url }}" alt="{{ article.title }} article header image">
+                                    <p><small>{{ article.created_at }}</small></p>
+                                    <h2>{{ article.title }}</h2>
+                                </div>
+                    </a>
+                {% endfor %}
+            </div>
+         
+            <div class="col-sm-6">
+                <img class="img-fluid" src="https://matrix-blog-project-files.s3.us-east-2.amazonaws.com/images/IMG-20210727-WA0027.jpg" alt="">
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -25,20 +25,46 @@ form{
     justify-content: center;
 }
 
-a .loop{
-    width: 2%;
-    padding: 20px;
-    margin-bottom: 20px;
+.loop{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 a .loop img{
-    width: 30%;
+    width: 20%;
+    margin-bottom: 10px;
 }
 
-@media screen and (min-width: 452px) {
+footer{
+    margin-top: 20px;
+    padding: 30px;
+    background-color: #000;
+    border-radius: 0 0 50px 50px ;
+}
+
+footer div {
+    font-size: 25pt;
+}
+
+footer a{
+    border-radius: 45%;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer a:hover{
+    color: #cce0ff;
+}
+
+@media screen and (max-width: 300px) {
 
     a .loop{
-        width: 50%;
+        width: 90%;
         /* padding: 20px; */
+    }
+    a .loop img{
+        width: 30%;
     }
 }
